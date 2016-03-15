@@ -31,5 +31,10 @@ namespace VotingRecords.Models
             get;
             set;
         }
+
+        internal object OrderBy(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

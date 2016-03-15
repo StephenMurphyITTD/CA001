@@ -47,7 +47,7 @@ namespace VotingRecords.Controllers
         public IHttpActionResult GetTDVote(String name)
         {
             // LINQ query, find matching TD (case-insensitive) or default value (null) if none matching
-            VotingRecord record = records.SingleOrDefault(v => v.Name.ToUpper() == name.ToUpper());
+            VotingRecord record = records.FirstOrDefault(v => v.Name.ToUpper() == name.ToUpper());
             if (record == null)
             {
                 return NotFound();
@@ -57,17 +57,18 @@ namespace VotingRecords.Controllers
             //Console.WriteLine("World");
         }
 
-        // Get bill/result/Yes
+        // Get bill/result/Ta
         // default route template changed to api/{controller}/{id} rather than api/{controller}/{ticker} in WebApiConfig.cs
-        [Route("bill/result/{record:alpha}")]
+        [Route("bill/record/{result:alpha}")]
         public IHttpActionResult GetVoteChoice(String result)
         {
             // LINQ query, find matching TD (case-insensitive) or default value (null) if none matching
-            VotingRecord record = records.SingleOrDefault(v => v.Vote.ToUpper() == result.ToUpper());
+            VotingRecord record = records.Where(v => v.Vote.ToUpper() == result.ToUpper());
             if (record == null)
             {
                 return NotFound();
             }
+            // return Ok(record);
             return Ok(record.Name);
         }
 
