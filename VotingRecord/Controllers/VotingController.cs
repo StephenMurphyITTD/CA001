@@ -1,4 +1,4 @@
-﻿// a RESTful services which provides stock market prices for stocks
+﻿// a RESTful services which provides voting records of TDs on a bill
 
 using VotingRecords.Models;
 using System;
@@ -11,11 +11,11 @@ namespace VotingRecords.Controllers
     public class RecordController : ApiController
     {
         /* 
-        * GET /api/stock/            get all stock listings               GetAllListings
-        * GET /api/stock/IBM         get price last trade for IBM         GetStockPrice   
+        * GET /api/record/                  get all TDs & There Votes       GetAllVoting
+        * GET /bill/name/StephenDonnelly    get vote from particular TD     GetTDVote   
         */
 
-        // the listings on this stock market
+        // the vote record on this bill 
         private List<VotingRecord> records;
 
         // initialise the listings collection, stateless
@@ -35,13 +35,13 @@ namespace VotingRecords.Controllers
         }
         // todo: use repository pattern
 
-        // GET api/stock
+        // GET api/record
         public IHttpActionResult GetAllVoting()
         {
             return Ok(records.OrderBy(s => s.Name).ToList());                                                   // 200 OK, listings serialized in response body
         }
 
-        // GET api/stock/GOOG or api/stock?ticker=GOOG
+        // GET bill/name/EndaKenny
         // default route template changed to api/{controller}/{id} rather than api/{controller}/{ticker} in WebApiConfig.cs
         [Route("bill/Name/{name:alpha}")]
         public IHttpActionResult GetTDVote(String name)
@@ -57,7 +57,7 @@ namespace VotingRecords.Controllers
             //Console.WriteLine("World");
         }
 
-        // GET api/stock/GOOG or api/stock?ticker=GOOG
+        // Get bill/result/Yes
         // default route template changed to api/{controller}/{id} rather than api/{controller}/{ticker} in WebApiConfig.cs
         [Route("bill/result/{record:alpha}")]
         public IHttpActionResult GetVoteChoice(String result)
