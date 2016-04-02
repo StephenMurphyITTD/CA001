@@ -23,14 +23,16 @@ namespace VotingRecords.Controllers
         {
             records = new List<VotingRecord>()
                 {
-                    new VotingRecord { Name = "EndaKenny", Vote = "Ta" },
-                    new VotingRecord { Name = "MichaelMartin", Vote = "Nil" },
-                    new VotingRecord { Name = "JoanBurton", Vote = "Ta" },
-                    new VotingRecord { Name = "GerryAdams", Vote = "Nil" },
-                    new VotingRecord { Name = "StephenDonnelly", Vote = "Nil" },
-                    new VotingRecord { Name = "EamonnRyan", Vote = "Ta" },
-                    new VotingRecord { Name = "ShaneRoss", Vote = "Ta" },
-                    new VotingRecord { Name = "RichardBoydBarret", Vote = "Absent" }
+                    new VotingRecord { Name = "EndaKenny", Vote = "Ta", Party = "FineGael" },
+                    new VotingRecord { Name = "MichaelMartin", Vote = "Nil", Party = "FiannaFail" },
+                    new VotingRecord { Name = "JoanBurton", Vote = "Ta", Party = "Labour" },
+                    new VotingRecord { Name = "GerryAdams", Vote = "Nil", Party = "SinnFein" },
+                    new VotingRecord { Name = "StephenDonnelly", Vote = "Nil", Party = "SocDems" },
+                    new VotingRecord { Name = "EamonnRyan", Vote = "Ta", Party = "Greens" },
+                    new VotingRecord { Name = "ShaneRoss", Vote = "Ta", Party = "IndependentAlliance" },
+                    new VotingRecord { Name = "RichardBoydBarret", Vote = "Absent", Party = "AAA/PBP" },
+                    new VotingRecord { Name = "Michael Noonan", Vote = "Ta", Party = "FineGael" },
+                    new VotingRecord { Name = "MaryLouMcDonald", Vote = "Ta", Party = "SinnFein" }
                 };
         }
         // todo: use repository pattern
@@ -60,8 +62,22 @@ namespace VotingRecords.Controllers
         [Route("bill/record/{result:alpha}")]
         public IHttpActionResult GetVoteChoice(String result)
         {
-            // LINQ query, find matching TD (case-insensitive) or default value (null) if none matching
+            // LINQ query, find matching vote (case-insensitive) or default value (null) if none matching
             var record = records.Where(v => v.Vote.ToUpper() == result.ToUpper());
+            if (record == null)
+            {
+                return NotFound();
+            }
+            return Ok(record);
+        }
+
+        // GET bill/party/SinnFein
+        [Route("bill/party/{groups:alpha}")]
+        public IHttpActionResult GetPartyChoice(String groups)
+        {
+            // LINQ query, find voting record of a TDs based on party affiliation (case-insensitive) or default value (null) if none matching
+            var record = records.Where(p => p.Party.ToUpper() == groups.ToUpper());
+
             if (record == null)
             {
                 return NotFound();

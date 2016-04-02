@@ -17,12 +17,12 @@ namespace VotingRecords.Models
         }
 
         // Party a TD belongs too e.g. Fine Gael, Sinn Fein
-      /**  [Required]
+        [Required]
         public string Party
         {
             get;
             set;
-        } **/
+        } 
 
         // Voting Record - Tá, Níl or Absent
         //[Required]
