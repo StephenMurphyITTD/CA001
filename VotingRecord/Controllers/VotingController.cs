@@ -52,9 +52,7 @@ namespace VotingRecords.Controllers
             {
                 return NotFound();
             }
-            //Console.WriteLine("Hello");
             return Ok(record.Vote);
-            //Console.WriteLine("World");
         }
 
         // Get bill/result/Ta
@@ -63,13 +61,13 @@ namespace VotingRecords.Controllers
         public IHttpActionResult GetVoteChoice(String result)
         {
             // LINQ query, find matching TD (case-insensitive) or default value (null) if none matching
-            VotingRecord record = records.Where(v => v.Vote.ToUpper() == result.ToUpper());
+            //VotingRecord record = records.FirstOrDefault(v => v.Vote.ToUpper() == result.ToUpper());
+            var record = records.Where(v => v.Vote.ToUpper() == result.ToUpper());
             if (record == null)
             {
                 return NotFound();
             }
-            // return Ok(record);
-            return Ok(record.Name);
+            return Ok(record);
         }
 
     }
