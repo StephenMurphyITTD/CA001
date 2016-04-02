@@ -61,7 +61,6 @@ namespace VotingRecords.Controllers
         public IHttpActionResult GetVoteChoice(String result)
         {
             // LINQ query, find matching TD (case-insensitive) or default value (null) if none matching
-            //VotingRecord record = records.FirstOrDefault(v => v.Vote.ToUpper() == result.ToUpper());
             var record = records.Where(v => v.Vote.ToUpper() == result.ToUpper());
             if (record == null)
             {
