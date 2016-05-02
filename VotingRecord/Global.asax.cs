@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace VotingRecord2
+namespace VotingRecord
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

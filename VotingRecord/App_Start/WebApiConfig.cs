@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace VotingRecord2
+namespace VotingRecord
 {
     public static class WebApiConfig
     {
