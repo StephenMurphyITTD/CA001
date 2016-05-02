@@ -213,6 +213,7 @@
     <Content Include="packages.config" />
     <Content Include="ClassDiagram1.cd" />
     <None Include="Project_Readme.html" />
+    <None Include="Properties\PublishProfiles\votingrecord.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -36,7 +36,7 @@ namespace VotingRecords.Controllers
         }
 
         // Get Records for a specific TD
-        [Route("bill/Ta/{Name}/{Surname}")]
+        [Route("bill/TD/{Name}/{Surname}")]
         public IEnumerable<VotingRecordEntity> GetbyTD(String Name, String Surname) 
         {
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
