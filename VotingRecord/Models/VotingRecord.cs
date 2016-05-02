@@ -1,36 +1,26 @@
 ﻿// a StockListing i.e. ticker and price
 
+using Microsoft.WindowsAzure.Storage.Table;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace VotingRecords.Models
 {
     // a record for a TDs voting history
-    public class VotingRecord
+    public class VotingRecordEntity : TableEntity
     {
-        // TD Name e.g. Enda Kenny, Gerry Adams
-        [Required]
-        public string Name
+        public VotingRecordEntity(string Name, string Surname)
         {
-            get;
-            set;
+            this.PartitionKey = Name;
+            this.RowKey = Surname;
+            this.Bill = Bill;
+            this.Party = Party;
+            this.Vote = Vote;
         }
+        public VotingRecordEntity() { }
 
-        // Party a TD belongs too e.g. Fine Gael, Sinn Fein
-        [Required]
-        public string Party
-        {
-            get;
-            set;
-        } 
-
-        // Voting Record - Tá, Níl or Absent
-        //[Required]
-        public string Vote
-        {
-            get;
-            set;
-        }
+        public string Bill { get; set; }
+        public string Party { get; set; }
+        public string Vote { get; set; }
 
         internal object OrderBy(Func<object, object> p)
         {
