@@ -26,7 +26,7 @@ namespace VotingRecords.Models
         }
         /// <summary>
         /// Additional Entity properties for voting record entity with no required properties
-        /// Bill Name, Vote & Party Membership
+        /// Bill Name, Vote and Party Membership
         /// </summary>
         public VotingRecordEntity() { }
 

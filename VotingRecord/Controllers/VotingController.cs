@@ -7,9 +7,7 @@ using Microsoft.Azure; // Namespace for CloudConfigurationManager
 using Microsoft.WindowsAzure.Storage; // Namespace for CloudStorageAccount
 using Microsoft.WindowsAzure.Storage.Table; // Namespace for Table storage types
 
-/// <summary>
-/// Namespace in which the controller is running
-/// </summary>
+
 namespace VotingRecords.Controllers
 {
     /// <summary>
@@ -46,7 +44,7 @@ namespace VotingRecords.Controllers
                 var record = table.ExecuteQuery(query);
                 return record;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
@@ -73,7 +71,7 @@ namespace VotingRecords.Controllers
                 var record = table.ExecuteQuery(query);
                 return record;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw;
             }
@@ -96,7 +94,7 @@ namespace VotingRecords.Controllers
                 var record = table.ExecuteQuery(query);
                 return record;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw;
             }
@@ -119,7 +117,7 @@ namespace VotingRecords.Controllers
                 var record = table.ExecuteQuery(query);
                 return record;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw;
             }
@@ -150,7 +148,7 @@ namespace VotingRecords.Controllers
                 table.Execute(insertOperation);
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -179,7 +177,7 @@ namespace VotingRecords.Controllers
                 table.Execute(updateOperation);
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }
@@ -208,7 +206,7 @@ namespace VotingRecords.Controllers
                 table.Execute(deleteOperation);
                 return Ok();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }
