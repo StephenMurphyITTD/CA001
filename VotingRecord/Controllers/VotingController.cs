@@ -39,11 +39,19 @@ namespace VotingRecords.Controllers
         [Route("billNo/All")]
         public IEnumerable<VotingRecordEntity> GetbyAll() //CloudTable table
         {
-            CloudTable table = Table();
-            TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>();
-            var record = table.ExecuteQuery(query);
-            return record;
+            try
+            {
+                CloudTable table = Table();
+                TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>();
+                var record = table.ExecuteQuery(query);
+                return record;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
+
         /// <summary>
         /// Route: BillNo/TD/{Name}/{Surname}
         /// Issuing a GET request against this URL returns a record of how a particular TD voted on this particular bill
@@ -56,13 +64,21 @@ namespace VotingRecords.Controllers
         [Route("billNo/TD/{Name}/{Surname}")]
         public IEnumerable<VotingRecordEntity> GetbyTD(String Name, String Surname) 
         {
-            CloudTable table = Table();
-            string nameFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Name);
-            string surnameFilter = TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, Surname);
-            TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>().Where(TableQuery.CombineFilters(nameFilter, TableOperators.And, surnameFilter));
-            var record = table.ExecuteQuery(query);
-            return record;
+            try
+            {
+                CloudTable table = Table();
+                string nameFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Name);
+                string surnameFilter = TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, Surname);
+                TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>().Where(TableQuery.CombineFilters(nameFilter, TableOperators.And, surnameFilter));
+                var record = table.ExecuteQuery(query);
+                return record;
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
+
         /// <summary>
         /// Route: BillNo/Party/{Party}
         /// Issuing a GET request against this URL returns a record of how all TDs from a single party voted
@@ -73,10 +89,17 @@ namespace VotingRecords.Controllers
         [Route("billNo/Party/{Party:alpha}")]
         public IEnumerable<VotingRecordEntity> GetbyParty(String Party)
         {
-            CloudTable table = Table();
-            TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>().Where(TableQuery.GenerateFilterCondition("Party", QueryComparisons.Equal, Party));
-            var record = table.ExecuteQuery(query);
-            return record;
+            try
+            {
+                CloudTable table = Table();
+                TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>().Where(TableQuery.GenerateFilterCondition("Party", QueryComparisons.Equal, Party));
+                var record = table.ExecuteQuery(query);
+                return record;
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -89,10 +112,17 @@ namespace VotingRecords.Controllers
         [Route("billNo/Vote/{Vote:alpha}")]
         public IEnumerable<VotingRecordEntity> GetbyVote(String Vote) 
         {
-            CloudTable table = Table();
-            TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>().Where(TableQuery.GenerateFilterCondition("Vote", QueryComparisons.Equal, Vote));
-            var record = table.ExecuteQuery(query);
-            return record;
+            try
+            {
+                CloudTable table = Table();
+                TableQuery<VotingRecordEntity> query = new TableQuery<VotingRecordEntity>().Where(TableQuery.GenerateFilterCondition("Vote", QueryComparisons.Equal, Vote));
+                var record = table.ExecuteQuery(query);
+                return record;
+            }
+            catch(Exception e)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -109,14 +139,21 @@ namespace VotingRecords.Controllers
         [HttpPost]
         public IHttpActionResult InsertEntry(String Name, String Surname, String Party, String Vote) 
         {
-            CloudTable table = Table();
-            VotingRecordEntity insertEntity = new VotingRecordEntity(Name, Surname);
-            insertEntity.Bill = "Technological Universities Bill 2015 - Report Stage. Amendment 18";
-            insertEntity.Vote = Vote;
-            insertEntity.Party = Party;
-            TableOperation insertOperation = TableOperation.Insert(insertEntity);
-            table.Execute(insertOperation);
-            return Ok();
+            try
+            {
+                CloudTable table = Table();
+                VotingRecordEntity insertEntity = new VotingRecordEntity(Name, Surname);
+                insertEntity.Bill = "Technological Universities Bill 2015 - Report Stage. Amendment 18";
+                insertEntity.Vote = Vote;
+                insertEntity.Party = Party;
+                TableOperation insertOperation = TableOperation.Insert(insertEntity);
+                table.Execute(insertOperation);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -131,14 +168,21 @@ namespace VotingRecords.Controllers
         [HttpPut]
         public IHttpActionResult UpdateEntry(String Name, String Surname, String Vote) 
         {
-            CloudTable table = Table();
-            TableOperation retrieveOperation = TableOperation.Retrieve<VotingRecordEntity>(Name, Surname);
-            TableResult retrievedResult = table.Execute(retrieveOperation);
-            VotingRecordEntity updateEntity = (VotingRecordEntity)retrievedResult.Result;
-            updateEntity.Vote = Vote;
-            TableOperation updateOperation = TableOperation.Replace(updateEntity);
-            table.Execute(updateOperation); 
-            return Ok();
+            try
+            {
+                CloudTable table = Table();
+                TableOperation retrieveOperation = TableOperation.Retrieve<VotingRecordEntity>(Name, Surname);
+                TableResult retrievedResult = table.Execute(retrieveOperation);
+                VotingRecordEntity updateEntity = (VotingRecordEntity)retrievedResult.Result;
+                updateEntity.Vote = Vote;
+                TableOperation updateOperation = TableOperation.Replace(updateEntity);
+                table.Execute(updateOperation);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         /// <summary>
@@ -154,13 +198,20 @@ namespace VotingRecords.Controllers
         [HttpDelete]
         public IHttpActionResult DeleteEntry(String Name, String Surname) 
         {
-            CloudTable table = Table();
-            TableOperation retrieveOperation = TableOperation.Retrieve<VotingRecordEntity>(Name, Surname);
-            TableResult retrievedResult = table.Execute(retrieveOperation);
-            VotingRecordEntity deleteEntity = (VotingRecordEntity)retrievedResult.Result;
-            TableOperation deleteOperation = TableOperation.Delete(deleteEntity);
-            table.Execute(deleteOperation);
-            return Ok();
+            try
+            {
+                CloudTable table = Table();
+                TableOperation retrieveOperation = TableOperation.Retrieve<VotingRecordEntity>(Name, Surname);
+                TableResult retrievedResult = table.Execute(retrieveOperation);
+                VotingRecordEntity deleteEntity = (VotingRecordEntity)retrievedResult.Result;
+                TableOperation deleteOperation = TableOperation.Delete(deleteEntity);
+                table.Execute(deleteOperation);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
     }
 }
