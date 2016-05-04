@@ -14,9 +14,6 @@ namespace VotingRecords.Controllers.Tests
         string tdURL = "BillNo/TD/Enda/Kenny";
         string partyURL = "BillNo/Party/SF";
         string voteURL = "BillNo/Vote/Absent";
-        string insertURL = "BillNo/Insert/Stephen/Murphy/Independent/Nil";
-        string updateURL = "BillNo/Update/Stephen/Murphy/Ta";
-        string deleteURL = "BillNo/Delete/Stephen/Murphy";
 
         [TestMethod()]
         public void GetbyAllTest()
