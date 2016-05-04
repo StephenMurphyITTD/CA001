@@ -2,8 +2,15 @@
 
 namespace VotingRecord
 {
+    /// <summary>
+    /// Web API Configuration
+    /// </summary>
     public static class WebApiConfig
     {
+        /// <summary>
+        /// Enables dependency injection for controllers
+        /// </summary>
+        /// <param name="config"></param>
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
